@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "config": "libs/config",
     "gateway": "apps/gateway"
   }
 }
