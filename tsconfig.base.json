@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@atm-microservices/common": ["libs/common/src/index.ts"],
       "@atm-microservices/config": ["libs/config/src/index.ts"]
     }
   },
