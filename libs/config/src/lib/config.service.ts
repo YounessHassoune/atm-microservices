@@ -19,6 +19,12 @@ export class ConfigService {
         const envVarsSchema: Joi.ObjectSchema = Joi.object({
             PORT: Joi.number().default(3000),
             KAFKA_BROKER_HOST: Joi.string(),
+            MONGO_DSN: Joi.string().required(),
+            MONGO_DATABASE:Joi.string().required(),
+            MONGO_USER: Joi.string().required(),
+            MONGO_PASSWORD: Joi.string().required(),
+            MONGO_ROOT_USER: Joi.string().required(),
+            MONGO_ROOT_PASSWORD: Joi.string().required(),
         });
         const { error, value: validatedEnvConfig } =
             envVarsSchema.validate(envConfig);
@@ -29,8 +35,8 @@ export class ConfigService {
         return validatedEnvConfig;
     }
 
-    get(key: string): string  {
+    get(key: string): string {
         return this.envConfig[key];
     }
-  
+
 }

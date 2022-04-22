@@ -14,7 +14,7 @@ import { UserService } from "./user.service";
                 options: {
                     client: {
                         clientId: 'user-service',
-                        brokers: ['localhost:29092'],
+                        brokers: [new ConfigService().get('KAFKA_BROKER_HOST')],
                     },
                     consumer: {
                         groupId: CONSUMER_GROUPS.USER_GROUP,

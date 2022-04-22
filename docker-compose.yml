@@ -2,6 +2,7 @@ version: '2'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    restart: always
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -12,6 +13,7 @@ services:
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
+    restart: always
     ports:
       - 29092:29092
     environment:
@@ -24,6 +26,7 @@ services:
 
   kafka_ui:
     image: provectuslabs/kafka-ui:latest
+    restart: always
     depends_on:
       - kafka
     ports:
@@ -32,3 +35,17 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+  
+  db:
+    image: 'mongo'
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - "/db/data"
+    ports:
+      - 27017:27017

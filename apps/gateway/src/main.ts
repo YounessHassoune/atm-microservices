@@ -17,10 +17,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
   const port = app.get(ConfigService).get('PORT');
-  await app.listen(port);
-  Logger.log(
-    ` 🚀 Gateway is running on: http://localhost:${port}`
-  );
+  app.listen(port).then(() => Logger.log(` 🚀 Gateway is running on: http://localhost:${port}`));
+
 }
 
 bootstrap();

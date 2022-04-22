@@ -15,7 +15,7 @@ export class UserController {
     console.log(data.value);
     const userId = data.value;
     Logger.log('user ud form user service : ' + userId);
-    return this.userService.getUser();
+    return this.userService.getUser(userId);
 
   }
 }
