@@ -11,9 +11,8 @@ import { UserService } from './user.service';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
-        console.log(configService.get('MONGO_DSN'))
         const options: MongooseModuleOptions = {
-          uri: configService.get('MONGO_DSN'),
+          uri: configService.get('MONGO_DSN') as string,
         };
         return options;
       },
