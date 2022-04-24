@@ -23,7 +23,7 @@ export class ConfigService {
             MONGO_USER_SERVICE_DATABASE:Joi.string(),
             MONGO_USER_SERVICE_USERNAME:Joi.string(),
             MONGO_USER_SERVICE_PASSWORD:Joi.string(),
-            
+            MONGO_USER_SERVICE_DSN:Joi.string()
         });
         const { error, value: validatedEnvConfig } =
             envVarsSchema.validate(envConfig);
