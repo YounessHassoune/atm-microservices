@@ -8,16 +8,16 @@ import { UserService } from './user.service';
 
 @Module({
   imports: [
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
-        const options: MongooseModuleOptions = {
-          uri: configService.get('MONGO_DSN') as string,
-        };
-        return options;
-      },
-      inject: [ConfigService],
-    }),
+    // MongooseModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: async (configService: ConfigService) => {
+    //     const options: MongooseModuleOptions = {
+    //       uri: configService.get('MONGO_DSN') as string,
+    //     };
+    //     return options;
+    //   },
+    //   inject: [ConfigService],
+    // }),
   ],
   controllers: [UserController],
   providers: [UserService],

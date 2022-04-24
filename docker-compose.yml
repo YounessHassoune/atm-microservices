@@ -43,10 +43,13 @@ services:
     image: mongo
     restart: always
     environment:
-       MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
-       MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
+      MONGO_INITDB_ROOT_USERNAME:  ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD:  ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_USER_SERVICE_USERNAME: ${MONGO_USER_SERVICE_USERNAME}
+      MONGO_USER_SERVICE_PASSWORD: ${MONGO_USER_SERVICE_PASSWORD}
+      MONGO_USER_SERVICE_DATABASE: ${MONGO_USER_SERVICE_DATABASE}
     ports:
       - 27017:27017
     volumes:
-      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+      - ./db/init/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
       - "./db/data/db-files:/data/db"
