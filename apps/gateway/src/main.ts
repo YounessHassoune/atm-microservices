@@ -1,9 +1,10 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@atm-microservices/config';
 import { AppModule } from './modules/app/app.module';
 import helmet from 'helmet';
+import { HttpExceptionFilter } from '@atm-microservices/common';
 
 
 async function bootstrap() {
@@ -17,6 +18,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
   const port = app.get(ConfigService).get('PORT');
+  app.useGlobalPipes(new ValidationPipe(
+    {
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }
+  ));
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.listen(port).then(() => Logger.log(` 🚀 Gateway is running on: http://localhost:${port}`));
 
 }

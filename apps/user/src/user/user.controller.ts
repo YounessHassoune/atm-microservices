@@ -1,4 +1,4 @@
-import { TOPICS } from '@atm-microservices/common';
+import { GetUser, ParseMessagePipe, TOPICS, User } from '@atm-microservices/common';
 import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
@@ -11,11 +11,7 @@ export class UserController {
 
 
   @MessagePattern(TOPICS.USER_TOPICS.GET_USER)
-  async getUser(@Payload() data: any): Promise<any> {
-    console.log(data.value);
-    const userId = data.value;
-    Logger.log('user ud form user service : ' + userId);
-    return this.userService.getUser(userId);
-
+  async getUser(@Payload(new ParseMessagePipe()) data: GetUser): Promise<User> {
+    return this.userService.getUser(data);
   }
 }

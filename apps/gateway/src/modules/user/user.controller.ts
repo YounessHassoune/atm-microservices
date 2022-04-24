@@ -1,5 +1,5 @@
-import { TOPICS } from "@atm-microservices/common";
-import { Controller, Get, Inject, Logger, Param } from "@nestjs/common";
+import {  GetUser, TOPICS } from "@atm-microservices/common";
+import { Body, Controller, Get, Inject, Logger, Param, Post } from "@nestjs/common";
 import { ClientKafka } from "@nestjs/microservices";
 import { ApiBody, ApiProperty } from "@nestjs/swagger";
 import { UserService } from "./user.service";
@@ -10,17 +10,19 @@ export class UserController {
     constructor(
         @Inject('USER-SERVICE') private readonly userClient: ClientKafka,
         private readonly userService: UserService) { }
+    
     onModuleInit() {
+        //  The subscribeToResponseOf() method takes a request's topic name as an argument
+        //  and adds the derived reply topic name to a collection of reply topics.
+        //  This method is required when implementing the message pattern.
         for (const topic in TOPICS.USER_TOPICS) {
-             this.userClient.subscribeToResponseOf(TOPICS.USER_TOPICS[topic]);
+            this.userClient.subscribeToResponseOf(TOPICS.USER_TOPICS[topic]);
         }
     }
 
-    @ApiBody({ type: String })
-    @Get(':id')
-    async getUser(@Param() params) {
-        const userId = params.id;
-        Logger.log(userId);
-        return this.userService.getUser(userId);
+    @Post()
+    async getUser(@Body() getUser:GetUser) {
+       return await this.userService.getUser(getUser);
     }
+
 }
