@@ -1,6 +1,7 @@
 export const TOPICS = {
     USER_TOPICS: {
       GET_USER:'get_user',
+      USER_WITHDRAWAL:'user_withdrawal'
     },
 };
 

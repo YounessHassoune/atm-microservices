@@ -1,4 +1,4 @@
-import {  GetUser, TOPICS } from "@atm-microservices/common";
+import {  GetUser, TOPICS, Withdrawal } from "@atm-microservices/common";
 import { Body, Controller, Get, Inject, Logger, Param, Post } from "@nestjs/common";
 import { ClientKafka } from "@nestjs/microservices";
 import { ApiBody, ApiProperty } from "@nestjs/swagger";
@@ -23,6 +23,11 @@ export class UserController {
     @Post()
     async getUser(@Body() getUser:GetUser) {
        return await this.userService.getUser(getUser);
+    }
+
+    @Post('withdrawal')
+    async withdrawal(@Body() withdrawal:Withdrawal) {
+        return await this.userService.withdrawal(withdrawal);
     }
 
 }
