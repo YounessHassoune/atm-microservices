@@ -1,4 +1,4 @@
-import { GetUser, TOPICS, User, Withdrawal } from '@atm-microservices/common';
+import { GetUser, Recharge, TOPICS, User, Withdrawal } from '@atm-microservices/common';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
@@ -18,6 +18,13 @@ export class UserService {
         return await firstValueFrom(this.userService.send(
               TOPICS.USER_TOPICS.USER_WITHDRAWAL,
               JSON.stringify(withdrawal)),
+        );
+    }
+
+    async recharge(recharge:Recharge): Promise<string> {
+        return await firstValueFrom(this.userService.send(
+              TOPICS.USER_TOPICS.USER_RECHARGE,
+              JSON.stringify(recharge)),
         );
     }
 }

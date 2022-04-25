@@ -1,7 +1,8 @@
 export const TOPICS = {
     USER_TOPICS: {
       GET_USER:'get_user',
-      USER_WITHDRAWAL:'user_withdrawal'
+      USER_WITHDRAWAL:'user_withdrawal',
+      USER_RECHARGE:'user_recharge',
     },
     MAIL_TOPICS: {
       SEND_MAIL:'send_mail'

@@ -1,4 +1,4 @@
-import {  GetUser, TOPICS, Withdrawal } from "@atm-microservices/common";
+import { GetUser, Recharge, TOPICS, Withdrawal } from "@atm-microservices/common";
 import { Body, Controller, Get, Inject, Logger, Param, Post } from "@nestjs/common";
 import { ClientKafka } from "@nestjs/microservices";
 import { ApiBody, ApiProperty } from "@nestjs/swagger";
@@ -10,7 +10,7 @@ export class UserController {
     constructor(
         @Inject('USER-SERVICE') private readonly userClient: ClientKafka,
         private readonly userService: UserService) { }
-    
+
     onModuleInit() {
         //  The subscribeToResponseOf() method takes a request's topic name as an argument
         //  and adds the derived reply topic name to a collection of reply topics.
@@ -21,13 +21,17 @@ export class UserController {
     }
 
     @Post()
-    async getUser(@Body() getUser:GetUser) {
-       return await this.userService.getUser(getUser);
+    async getUser(@Body() getUser: GetUser) {
+        return await this.userService.getUser(getUser);
     }
 
     @Post('withdrawal')
-    async withdrawal(@Body() withdrawal:Withdrawal) {
+    async withdrawal(@Body() withdrawal: Withdrawal) {
         return await this.userService.withdrawal(withdrawal);
     }
 
+    @Post('recharge')
+    async recharge(@Body() recharge: Recharge) {
+        return await this.userService.recharge(recharge);
+    }
 }

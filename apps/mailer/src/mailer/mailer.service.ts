@@ -8,7 +8,7 @@ export class MailService {
 
     private template={
       withdrawal: 'withdrawal',
-      telecomCredit: 'telecomCredit',
+      recharge: 'recharge', 
     }
     async SendEmail(data: Mail) {
       await this.mailerService.sendMail({

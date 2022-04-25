@@ -1,4 +1,4 @@
-import { GetUser, ParseMessagePipe, TOPICS, User, Withdrawal } from '@atm-microservices/common';
+import { GetUser, ParseMessagePipe, Recharge, TOPICS, User, Withdrawal } from '@atm-microservices/common';
 import { Controller, Inject, Logger } from '@nestjs/common';
 import { ClientKafka, MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
@@ -21,4 +21,9 @@ export class UserController {
   async withdrawal(@Payload(new ParseMessagePipe()) data: Withdrawal): Promise<User> {
     return this.userService.withdrawal(data);
   }
+
+  @MessagePattern(TOPICS.USER_TOPICS.USER_RECHARGE)
+  async recharge(@Payload(new ParseMessagePipe()) data: Recharge): Promise<string> {
+    return this.userService.recharge(data);
+  } 
 }

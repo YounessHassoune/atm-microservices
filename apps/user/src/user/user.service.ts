@@ -1,4 +1,4 @@
-import { GetUser, TOPICS, User, UserDocument, Withdrawal } from '@atm-microservices/common';
+import { GetUser, Recharge, TOPICS, User, UserDocument, Withdrawal } from '@atm-microservices/common';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientKafka, RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
@@ -41,5 +41,28 @@ export class UserService {
     };
     this.mailClient.emit(TOPICS.MAIL_TOPICS.SEND_MAIL, JSON.stringify(data));
     return user;
+  }
+
+  async recharge(recharge: Recharge): Promise<string> {
+    const { account_number,amount,company,type ,phone} = recharge;
+    const user = await this.userModel.findOne({ account_number });
+    if (!user) throw new RpcException('User not found');
+    if (user.account_balance < amount) throw new RpcException('Insufficient balance');
+    user.account_balance -= amount;
+    await user.save();
+    const data = {
+      template: 'recharge',
+      to: user.user_email,
+      subject: 'Account Recharge',
+      context: {
+        user: user.user_fullName,
+        phone,
+        amount,
+        company,
+        type,
+      }
+    };
+    this.mailClient.emit(TOPICS.MAIL_TOPICS.SEND_MAIL, JSON.stringify(data));
+    return `You have successfully activated your ${amount}  Dh pass ,${type} for this number : ${phone} .`;
   }
 }
