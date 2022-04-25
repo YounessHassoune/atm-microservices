@@ -12,7 +12,7 @@ import { UserModule } from '../user/user.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         const options: MongooseModuleOptions = {
-          uri: configService.get('MONGO_USER_SERVICE_DSN') as string,
+          uri: configService.get('MONGO_USER_SERVICE_DSN'),
         };
         return options;
       },

@@ -3,8 +3,12 @@ export const TOPICS = {
       GET_USER:'get_user',
       USER_WITHDRAWAL:'user_withdrawal'
     },
+    MAIL_TOPICS: {
+      SEND_MAIL:'send_mail'
+    }
 };
 
 export const CONSUMER_GROUPS = {
-    USER_GROUP: 'user_consumer'
+    USER_GROUP: 'user_consumer',
+    MAILER_GROUP: 'mailer_consumer',
 }
