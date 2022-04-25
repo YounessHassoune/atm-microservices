@@ -4,6 +4,7 @@
     "common": "libs/common",
     "config": "libs/config",
     "gateway": "apps/gateway",
+    "mailer": "apps/mailer",
     "user": "apps/user"
   }
 }
